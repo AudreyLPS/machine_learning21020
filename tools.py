@@ -19,10 +19,12 @@ fr = SnowballStemmer('french')
 #construction du corpus 
 Corpus=pd.read_csv('corpus.csv')
 Corpus['label']=Corpus['rating']
+Corpus['l_review']=Corpus['review'].apply(lambda x:len(x.split(' ')))
+Corpus=Corpus[Corpus['l_review']>5]
 positif=Corpus[Corpus['label']>3].sample(391)
 negatif=Corpus[Corpus['label']<3]
 Corpus_new=pd.concat([positif,negatif],ignore_index=True)[['review','label']]
-
+print(len(Corpus_new))
 
 
 def nettoyage(string):
@@ -66,7 +68,7 @@ def entrainement():
     pickle.dump(vectorizer.vocabulary_,open("feature.pkl","wb"))
 
     y=Corpus_new['label']
-    x_train, x_val, y_train, y_val = train_test_split(X, y, test_size = 0.2)
+    x_train, x_val, y_train, y_val = train_test_split(X, y, test_size = 0.15)
     cls=LogisticRegression(max_iter=300).fit(x_train,y_train)
    
     #Save classifier
