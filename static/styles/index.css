@@ -75,3 +75,63 @@ h3 {
   text-decoration: none;
 }
 
+
+body {
+  background: rgba(20, 40, 40, 0.8);
+  font-family: "Open Sans", sans-serif;
+}
+
+.container {
+  position: relative;
+  background: rgba(20, 20, 20, 0.8);
+  max-width: 500px;
+  height: 450px;
+  margin: 60px auto;
+  box-shadow: 0px 2px 14px 9px;
+}
+
+.paytext {
+  color: #fff;
+  text-align: center;
+  background: #296e6e;
+  width: 100%;
+  padding: 1px;
+  font-size: 20px;
+}
+
+label {
+  color: #fff;
+  text-transform: uppercase;
+  font-family: verdana;
+  font-size: 10px;
+  display: block;
+  line-height: 34px;
+}
+
+input {
+  background: none;
+  border: none;
+  border-bottom: 2px solid #96b2ba;
+  color: white;
+  width: 94%;
+  font-family: cursive;
+}
+
+form {
+  margin-left: 28px;
+  margin-top: 31px;
+}
+
+input[type="submit"] { 
+  width: 50%;
+  background: none;
+  margin-left: 21%;
+  margin-top: 35px;
+  border: 2px solid teal;
+  padding: 10px;
+}
+
+input[type="submit"]:hover {
+  background: teal;
+  cursor: pointer;
+}

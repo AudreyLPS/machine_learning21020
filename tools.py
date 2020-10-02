@@ -21,9 +21,18 @@ Corpus=pd.read_csv('corpus.csv')
 Corpus['label']=Corpus['rating']
 Corpus['l_review']=Corpus['review'].apply(lambda x:len(x.split(' ')))
 Corpus=Corpus[Corpus['l_review']>5]
+
 positif=Corpus[Corpus['label']>3].sample(391)
 negatif=Corpus[Corpus['label']<3]
+
 Corpus_new=pd.concat([positif,negatif],ignore_index=True)[['review','label']]
+
+for ind in Corpus_new['label'].index:
+    if Corpus_new.loc[ind,'label'] > 3:
+        Corpus_new.loc[ind,'label']=1
+    elif Corpus_new.loc[ind,'label'] < 3:
+        Corpus_new.loc[ind,'label']=0
+
 print(len(Corpus_new))
 
 
@@ -48,11 +57,11 @@ def model(phrase):
 
     cls=pickle.load(open("cls.pkl", "rb"))
     if (cls.predict(user)[0])== 1 :
-        texte="Merci pour ton SUPER commentaire"
+        texte="possitif"
     else:
-        texte="Je suis désolé d'apprendre votre mauvaise expérience"
+        texte="négatif"
     #return (cls.predict(user)[0],cls.predict_proba(user).max())
-    return (texte, cls.predict_proba(user).max())
+    return (texte, round(cls.predict_proba(user).max(),3))
 
 def entrainement():
     #print (Corpus['review_net'][:2])
@@ -74,5 +83,5 @@ def entrainement():
     #Save classifier
     pickle.dump(cls,open("cls.pkl","wb"))
 
-    return (cls.score(x_val,y_val))
+    return (round(cls.score(x_val,y_val),3))
     #return (y)
